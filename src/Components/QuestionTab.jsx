@@ -62,11 +62,16 @@ function QuestionsTab() {
       };
       console.log(body);
       axios
-        .post(process.env.REACT_APP_SERVER_URL + "addQuestion", body)
+        .post(process.env.REACT_APP_SERVER_URL + "addQuestion", body, {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+          },
+        })
         .then((res) => {
           let Link =
             `https://ayushdhimanassignment.netlify.app/Solution/` + res.data;
-            // `https://localhost:3000/Solution/` + res.data;
+          // `https://localhost:3000/Solution/` + res.data;
           setLink(Link);
           document.getElementById("Main").innerHTML = `<div> ${Link}</div>`;
         })

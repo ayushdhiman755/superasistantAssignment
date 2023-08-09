@@ -22,7 +22,12 @@ export default function SolutionQuestionTabs() {
 
   useLayoutEffect(() => {
     axios
-      .get(process.env.REACT_APP_SERVER_URL + "getQuestion/" + QuestionId)
+      .get(process.env.REACT_APP_SERVER_URL + "getQuestion/" + QuestionId, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        },
+      })
       .then((data) => {
         console.log(data.data);
         setAllQuestions(data.data);
