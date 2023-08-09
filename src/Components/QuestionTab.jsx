@@ -3,22 +3,22 @@ import Nav from "react-bootstrap/Nav";
 import SaveIcon from "@mui/icons-material/Save";
 import Row from "react-bootstrap/Row";
 import Tab from "react-bootstrap/Tab";
-import CategoricalQuestionCreation from "./CategoricalQuestionCreation";
 import FillInBlankQuestionCreation from "./FillInBlankQuestionCreation";
 import ComprehensionQuestionCreation from "./ComprehensionQuestionCreation";
 import DragableQues1 from "./DragableQues1";
 import axios from "axios";
 import { useState } from "react";
-import { Button, colors } from "@mui/material";
+import { Button } from "@mui/material";
 function QuestionsTab() {
   const [q1Des, q1Setdesc] = useState();
-  const [q1Items, q1SetItems] = useState([]);
+  const [q1Items, q1SetItems] = useState({});
   const [q1category, q1Setcategory] = useState([]);
   const [q2Question, q2SetQuestion] = useState();
   const [q2Content, q2SetContent] = useState();
   const [q2Blanks, q2SetBlanks] = useState();
   const [q3Questions, q3SetQuestion] = useState([]);
   const [q3Passage, q3SetPAssage] = useState();
+  const [link, setLink] = useState();
   const Save = () => {
     if (
       !q1Des ||
@@ -28,17 +28,17 @@ function QuestionsTab() {
       !q1category ||
       q1category === "" ||
       !q2Question ||
-      q2Question == "" ||
+      q2Question === "" ||
       !q2Content ||
       q2Content === "" ||
       !q2Blanks ||
-      q2Blanks==="" ||
+      q2Blanks === "" ||
       !q3Questions ||
-      q3Questions==="" ||
+      q3Questions === "" ||
       !q3Passage ||
-      q3Passage==="" ||
-      q1Items === [] ||
-      q3Questions == [] ||
+      q3Passage === "" ||
+      q1Items === {} ||
+      q3Questions === [] ||
       q1category === []
     )
       alert("provide all question properly");
@@ -63,12 +63,18 @@ function QuestionsTab() {
       console.log(body);
       axios
         .post(process.env.REACT_APP_SERVER_URL + "addQuestion", body)
-        .then((res) => console.log(res))
+        .then((res) => {
+          let Link =
+            `https://ayushdhimanassignment.netlify.app/Solution/` + res.data;
+            // `https://localhost:3000/Solution/` + res.data;
+          setLink(Link);
+          document.getElementById("Main").innerHTML = `<div> ${Link}</div>`;
+        })
         .catch((err) => console.log(err));
     }
   };
   return (
-    <div>
+    <div id="Main">
       <Tab.Container id="left-tabs-example" defaultActiveKey="first">
         <Row>
           <Col sm={1}>

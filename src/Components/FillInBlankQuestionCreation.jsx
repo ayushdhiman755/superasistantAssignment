@@ -1,5 +1,5 @@
 import DragHandleIcon from "@mui/icons-material/DragHandle";
-import React, { useMemo, useRef, useState } from "react";
+import React, { useMemo, useRef} from "react";
 import JoditEditor from "jodit-react";
 import CloseIcon from "@mui/icons-material/Close";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";

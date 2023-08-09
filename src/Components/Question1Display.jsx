@@ -1,29 +1,36 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
-export default function Question1Display() {
-  const question =
-    "Categorize the following items by dropping them into their respective category";
-  const [categories, setCategories] = useState([
-    "cat1",
-    "cat2",
-    "cat3",
-    "cat4",
-  ]);
-  const [items, setItems] = useState([
-    "item1",
-    "item2",
-    "item3",
-    "item4",
-    "item5ffffffff",
-  ]);
-  const [ans, setAns] = useState({});
+export default function Question1Display({
+  ans,
+  setAns,
+  items,
+  setItems,
+  question,
+  categories,
+}) {
+  // const question =
+  // "Categorize the following items by dropping them into their respective category";
+  // const [categories, setCategories] = useState();
+  // const [items, setItems] = useState([
+  //   "item1",
+  //   "item2",
+  //   "item3",
+  //   "item4",
+  //   "item5ffffffff",
+  // ]);
+  // const [ans, setAns] = useState({});
 
   useLayoutEffect(() => {
     let newCategoryObj = {};
-
-    for (let index = 0; index < categories.length; index++) {
-      newCategoryObj[categories[index]] = ["item1", "item2", "item3"];
+    // setCategories([
+    //   "cat1",
+    //   "cat2",
+    //   "cat3",
+    //   "cat4",
+    // ])
+    for (let index = 0; index < categories?.length; index++) {
+      newCategoryObj[categories[index]] = [];
     }
     setAns(newCategoryObj);
     console.log("ans ", newCategoryObj);
@@ -67,7 +74,7 @@ export default function Question1Display() {
         newAns[source.droppableId] = itemlist;
         setAns(newAns);
       } else if (destination.droppableId === "items") {
-        return
+        return;
       } else {
         let sourceList = ans[source.droppableId];
         let destinationList = ans[destination.droppableId];

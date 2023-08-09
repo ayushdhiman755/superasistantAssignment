@@ -1,10 +1,18 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useLayoutEffect } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
-export default function FIllInBlanksSolution(props) {
-  const [blanks, setBlanks] = useState(props?.blank);
-  const [sentence, setSentence] = useState(props?.sentence);
-  const [ans, SetAns] = useState();
+export default function FIllInBlanksSolution({
+  blanks,
+  setBlanks,
+  sentence,
+  setSentence,
+  ans,
+  Question,
+  SetAns,
+}) {
+  // const [blanks, setBlanks] = useState(Question?.blank);
+  // const [sentence, setSentence] = useState(Question?.sentence);
+  // const [ans, SetAns] = useState();
 
   const BlankComponent = ({ ind, sentence }) => {
     return (
@@ -18,7 +26,7 @@ export default function FIllInBlanksSolution(props) {
             }}
             ref={provided.innerRef}
             {...provided.droppableProps}
-            className="p-1 border-solid border-2 border-indigo-600 rounded-4 max-w-full m-auto"
+            className="p-1 text-center border-solid border-2 border-indigo-600 rounded-4 max-w-full m-auto"
           >
             {ans[ind]?.map((blank, index) => (
               <Draggable
@@ -45,26 +53,28 @@ export default function FIllInBlanksSolution(props) {
       </Droppable>
     );
   };
-  useLayoutEffect(() => {
-    setBlanks(props?.blanks);
-    let sent = props.sentence;
-    // let startIndex = [...sent.matchAll(new RegExp("_{2,}", "g"))];
-    // startIndex.map((val, index) => {
-    //   sent = sent.replace(new RegExp("_{2,}"), "<BlankComponent ind={index}/>");
-    //   //   console.log(val.index, sent);
-    // });
-    setSentence(sent.split(new RegExp("_{2,}")));
-    // console.log("ind",startIndex)
-    let newAns = [];
-    blanks?.map((b, i) => {
-      newAns[i] = ["Blank" + i];
-    });
-    SetAns(newAns);
-  }, [props]);
+  // useLayoutEffect(() => {
+  //   let sent = sentence;
+  //   // let startIndex = [...sent.matchAll(new RegExp("_{2,}", "g"))];
+  //   // startIndex.map((val, index) => {
+  //   //   sent = sent.replace(new RegExp("_{2,}"), "<BlankComponent ind={index}/>");
+  //   //   //   console.log(val.index, sent);
+  //   // });
+  //   let list = sent?.split(new RegExp("_{2,}"));
+  //   setSentence(list);
+  //   console.log(sentence);
+  //   // console.log("ind",startIndex)
+  //   let newAns = [];
+  //   blanks?.map((b, i) => {
+  //     newAns[i] = ["Blank" + i];
+  //   });
 
-  useEffect(() => {
-    document.getElementById("SENTENCE").innerHTML = sentence;
-  }, [sentence]);
+  //   SetAns(newAns);
+  // }, [Question]);
+
+  // useEffect(() => {
+  //   document.getElementById("SENTENCE").innerHTML = sentence;
+  // }, [sentence]);
 
   const handleDrag = (result) => {
     const { source, destination } = result;
@@ -101,7 +111,7 @@ export default function FIllInBlanksSolution(props) {
       if (newAns[destinationBlankNo])
         newAns[destinationBlankNo].splice(destination.index, 0, add);
       else {
-        newAns[destinationBlankNo]=[add];
+        newAns[destinationBlankNo] = [add];
       }
       SetAns(newAns);
     }
@@ -110,7 +120,7 @@ export default function FIllInBlanksSolution(props) {
     <div>
       <div className="text-justify mx-2 my-3">
         <span className="font-semibold">Que 2: </span>
-        <span className="font-medium">&nbsp;{props?.question}</span>
+        <span className="font-medium">&nbsp;{Question?.question}</span>
       </div>
       <DragDropContext onDragEnd={handleDrag}>
         <Droppable droppableId="blanks">
@@ -148,7 +158,7 @@ export default function FIllInBlanksSolution(props) {
           {sentence?.map((word, index) => (
             <span className="flex items-center">
               <span className="m-auto mx-1">{word}</span>
-              {index === sentence.length - 1 ? (
+              {index === sentence?.length - 1 ? (
                 ""
               ) : (
                 <BlankComponent ind={index} sentence={sentence} />
